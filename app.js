@@ -15,5 +15,4 @@ app.set("view engine", "ejs");
 app.use("/", require("./server/routes/main"));
 
 app.listen(PORT, () => {
-  console.log(`Aplicacion iniciada en el puerto ${PORT}`);
 });
