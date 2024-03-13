@@ -1,4 +1,5 @@
 .cover-page {
+    filter: grayscale(100%);
     display: block;
     margin-left: auto;
     margin-right: auto;
