@@ -52,14 +52,14 @@ router.get("/ingreso", (req, resp) => {
   resp.render("login");
 });
 
-router.get("/articulo/registro", (req, resp) => {
+router.get("/articulo", (req, resp) => {
   resp.render("articleForm");
 });
 
 router.post("/buscar", async (req, resp) => {
     try {
         const locals = {
-          title: "Seach",
+          title: "Buscar | Articulos UTL",
           description: "Simple Blog created with NodeJs, Express & MongoDb."
         }
     
