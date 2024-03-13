@@ -5,24 +5,26 @@
 <section class="articles">
   <div class="row mb-3">
     <div class="col">
-      <h2 class="">Ultimos Posts</h2>
+      <h2 class="text-center">Ultimos articulos</h2>
     </div>
+    <% if (nextPage !== null) { %>
     <div class="col text-end">
       <a href="/?pagina=" class="btn btn-dark">&lt; Ver otros posts</a>
     </div>
+    <% } %>
   </div>
   <div class="row align-items-md-stretch mb-3">
-    <a class="col-md-6 text-decoration-none" href="#">
+    <% data.forEach(article => { %>
+    <a
+      class="col-md-6 text-decoration-none mb-3"
+      href="/articulo/<%= article._id %>"
+    >
       <div class="h-100 p-5 text-bg-dark rounded-3">
-        <h2>Titulo</h2>
-        <p>Contenido</p>
+        <h2><%= article.title %></h2>
+        <small><%= article.created_at.toDateString() %></small>
+        <p><%= article.body %></p>
       </div>
     </a>
-    <a class="col-md-6 text-decoration-none" href="#">
-      <div class="h-100 p-5 text-bg-light rounded-3">
-        <h2>Titulo</h2>
-        <p>Contenido</p>
-      </div>
-    </a>
+    <% }) %>
   </div>
 </section>

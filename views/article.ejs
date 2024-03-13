@@ -1,0 +1,14 @@
+<div class="col-lg-8">
+  <!-- Post content-->
+  <article>
+    <header class="mb-4">
+      <h1 class="fw-bolder mb-1"><%= data.title %></h1>
+      <div class="text-muted fst-italic mb-2">
+        <%= data.updated_at.toDateString()%>
+      </div>
+    </header>
+    <section class="mb-5">
+      <p class="fs-5 mb-4"><%= data.body %></p>
+    </section>
+  </article>
+</div>

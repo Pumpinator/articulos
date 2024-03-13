@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-success">
+<nav class="navbar navbar-expand-lg bg-body-success mb-3">
   <div class="container-fluid">
     <a class="navbar-brand text-white bg-black rounded-pill p-3" href="/">
       <img
@@ -24,17 +24,18 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <% if(locals.active) { %>
-          <a class="nav-link active" aria-current="page" href="/">Inicio</a>
-          <% } else { %>
-          <a class="nav-link" href="/">Inicio</a>
-          <% } %>
+          <a
+            class="nav-link <%= locals.active ? 'active' : ''%>"
+            aria-current="page"
+            href="/"
+            >Inicio</a
+          >
         </li>
       </ul>
-      <!-- <form class="d-flex px-3" role="search">
-        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
-        <button class="btn btn-outline-primary" type="submit">Buscar</button>
-      </form> -->
+      <form class="d-flex px-3" action="/buscar" method="POST" role="buscar">
+        <input class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar" name="searchTerm">
+        <button class="btn btn-outline-dark" type="submit">Buscar</button>
+      </form>
       <div class="px-3">
         <a class="btn btn-dark">Ingresar</a>
         <a class="btn btn-secondary">Registrar</a>
