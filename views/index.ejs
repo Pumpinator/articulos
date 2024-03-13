@@ -2,16 +2,29 @@
   <img class="cover-page" src="/img/edificiod.png" alt="edificio d de la utl" />
 </div>
 
-<section class="articles">
+<section>
   <div class="row mb-3">
+    <div class="col">
+      <form class="d-flex p-3" action="/buscar" method="POST" role="buscar">
+        <input
+          class="form-control w-75"
+          type="search"
+          placeholder="Buscar"
+          aria-label="Buscar"
+          name="searchTerm"
+        />
+      </form>
+    </div>
     <div class="col">
       <h2 class="text-center">Ultimos articulos</h2>
     </div>
-    <% if (nextPage !== null) { %>
     <div class="col text-end">
-      <a href="/?pagina=" class="btn btn-dark">&lt; Ver otros posts</a>
+      <% if (nextPage !== null) { %>
+      <a href="/?pagina=<%= nextPage %>" class="btn btn-dark"
+        >&lt; Ver otros posts</a
+      >
+      <% } %>
     </div>
-    <% } %>
   </div>
   <div class="row align-items-md-stretch mb-3">
     <% data.forEach(article => { %>

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const article = require("../models/article");
+const article = require("../models/articleModel");
 
 router.get("/", async (req, resp) => {
   const locals = {
@@ -8,7 +8,7 @@ router.get("/", async (req, resp) => {
     description: "Hecho por Quetzalcode.",
   };
 
-  let perPage = 10;
+  let perPage = 6;
   let page = req.query.pagina || 1;
 
   const data = await article
@@ -28,60 +28,6 @@ router.get("/", async (req, resp) => {
     nextPage: hasNextPage ? nextPage : null,
     currentRoute: "/",
   });
-});
-
-router.get("/articulo/:id", async (req, resp) => {
-  try {
-    const locals = {
-      title: "Articulo | Articulos UTL",
-      description: "Hecho por Quetzalcode.",
-    };
-    let slug = req.params.id;
-    const data = await article.findById({ _id: slug });
-    resp.render("article", { locals, data });
-  } catch (error) {
-    console.error(error);
-  }
-});
-
-router.get("/registro", (req, resp) => {
-  resp.render("signup");
-});
-
-router.get("/ingreso", (req, resp) => {
-  resp.render("login");
-});
-
-router.get("/articulo", (req, resp) => {
-  resp.render("articleForm");
-});
-
-router.post("/buscar", async (req, resp) => {
-    try {
-        const locals = {
-          title: "Buscar | Articulos UTL",
-          description: "Simple Blog created with NodeJs, Express & MongoDb."
-        }
-    
-        let searchTerm = req.body.searchTerm;
-        const searchNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "")
-    
-        const data = await Post.find({
-          $or: [
-            { title: { $regex: new RegExp(searchNoSpecialChar, 'i') }},
-            { body: { $regex: new RegExp(searchNoSpecialChar, 'i') }}
-          ]
-        });
-    
-        res.render("index", {
-          data,
-          locals,
-          currentRoute: '/'
-        });
-    
-      } catch (error) {
-        console.log(error);
-      }
 });
 
 module.exports = router;
