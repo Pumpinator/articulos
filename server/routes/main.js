@@ -33,7 +33,7 @@ router.get("/", async (req, resp) => {
 router.get("/articulo/:id", async (req, resp) => {
   try {
     const locals = {
-      title: "Articulos UTL",
+      title: "Articulo | Articulos UTL",
       description: "Hecho por Quetzalcode.",
     };
     let slug = req.params.id;
@@ -42,6 +42,18 @@ router.get("/articulo/:id", async (req, resp) => {
   } catch (error) {
     console.error(error);
   }
+});
+
+router.get("/registro", (req, resp) => {
+  resp.render("signup");
+});
+
+router.get("/ingreso", (req, resp) => {
+  resp.render("login");
+});
+
+router.get("/articulo/registro", (req, resp) => {
+  resp.render("articleForm");
 });
 
 router.post("/buscar", async (req, resp) => {
