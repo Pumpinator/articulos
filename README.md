@@ -11,7 +11,7 @@ Crear un archivo llamado .env en la raíz del proyecto to guardar credenciales. 
 
 ```
 MONGODB_URI=mongodb://localhost:27017/articulos
-JWT_SECRET=Quetzalcode
+JWTSECRET=Quetzalcode
 ```
 
 ## Instalación

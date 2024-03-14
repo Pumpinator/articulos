@@ -15,8 +15,13 @@
   </head>
   <body>
     <div class="container-fluid">
-      <%- include('../partials/header.ejs') %> <%- body %> <%-
-      include('../partials/footer.ejs') %>
+      <% if (locals.isLogged) { %>
+        <%- include('../user/header.ejs') %>
+      <% } else { %>
+        <%- include('../partials/header.ejs') %>
+      <% } %>
+      <%- body %>
+      <%- include('../partials/footer.ejs') %>
     </div>
   </body>
 </html>

@@ -2,25 +2,27 @@ const express = require("express");
 const router = express.Router();
 const articleModel = require("../models/articleModel");
 
-router.get("/articulo/agregar", (req, resp) => {
+const { authMiddleware, isLogged } = require("../configs/authMiddleware");
+
+router.get("/articulo/crear", authMiddleware, (req, resp) => {
   try {
     const locals = {
       title: "Crear | Articulos UTL",
       description: "Hecho por Quetzalcode.",
       header: "Nuevo artículo",
+      isLogged: isLogged(req),
     };
-    resp.render("article/articleForm", { locals });
+    resp.render("article/create", { locals });
   } catch (error) {
     console.log(error);
   }
 });
 
-router.post("/articulo/agregar", (req, resp) => {
+router.post("/articulo/crear", authMiddleware, async (req, resp) => {
   try {
-    console.log(req.body);
     try {
       const { title, body } = req.body;
-      const article = articleModel.create({ title: title, body: body });
+      await articleModel.create({ title: title, body: body });
       resp.redirect("/inicio");
     } catch (error) {
       console.log(error);
@@ -36,24 +38,71 @@ router.get("/articulo/:id", async (req, resp) => {
       title: "Articulo | Articulos UTL",
       description: "Hecho por Quetzalcode.",
       header: "Articulo",
+      isLogged: isLogged(req),
     };
-    let slug = req.params.id;
-    const data = await articleModel.findById({ _id: slug });
-    resp.render("article/index", { locals, data });
+    const id = req.params.id;
+    const data = await articleModel.findById({ _id: id });
+    resp.render("article/lecture", { locals, data });
   } catch (error) {
     console.error(error);
   }
 });
 
-router.post("/buscar", async (req, resp) => {
+router.get("/articulo/actualizar/:id", authMiddleware, async (req, resp) => {
+  try {
+    const locals = {
+      title: "Editar | Articulos UTL",
+      description: "Hecho por Quetzalcode.",
+      header: "Editar artículo",
+      isLogged: isLogged(req),
+    };
+    const { id } = req.params;
+    const data = await articleModel.findById({ _id: id });
+    resp.render("article/update", {
+      locals,
+      data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.put("/articulo/actualizar/:id", authMiddleware, async (req, resp) => {
+  try {
+    const { title, body } = req.body;
+    const { id } = req.params;
+    await articleModel.findByIdAndUpdate(id, {
+      title: title,
+      body: body,
+      updated_at: Date.now(),
+    });
+    resp.redirect(`/articulo/actualizar/${req.params.id}`);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.delete('/articulo/eliminar/:id', authMiddleware, async (req, resp) => {
+  try {
+    const id = req.params.id;
+    await articleModel.deleteOne( { _id: id } );
+    resp.redirect('/inicio');
+  } catch (error) {
+    console.log(error);
+  }
+
+});
+
+router.post("/articulo/buscar", async (req, resp) => {
   try {
     const locals = {
       title: "Buscar | Articulos UTL",
       description: "Hecho por Quetzalcode.",
       header: "Resultados de búsqueda",
+      isLogged: isLogged(req),
     };
 
-    let searchTerm = req.body.searchTerm;
+    const searchTerm = req.body.searchTerm;
     const searchNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
 
     const data = await articleModel.find({
@@ -67,6 +116,12 @@ router.post("/buscar", async (req, resp) => {
   } catch (error) {
     console.log(error);
   }
+});
+
+router.use((req, resp) => {
+  resp.status(404).render("partials/error", {
+    error: { code: 404, message: "Página no encontrada." },
+  });
 });
 
 module.exports = router;

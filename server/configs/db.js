@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const getConnection = async () => {
     try {
         mongoose.set("strictQuery", false);
@@ -8,4 +9,5 @@ const getConnection = async () => {
         console.error(error);
     }
 }
+
 module.exports = getConnection;

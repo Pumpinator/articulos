@@ -1,0 +1,40 @@
+<h1 class="text-center"><%= locals.header %></h1>
+<div class="container d-flex justify-content-center mt-5">
+  <form
+    class="row g-3"
+    action="/articulo/actualizar/<%= data._id %>?_method=PUT"
+    method="POST"
+  >
+    <div class="col-12">
+      <label class="form-label"> Titulo </label>
+      <input
+        name="title"
+        type="text"
+        class="form-control"
+        value="<%= data.title %>"
+        required
+        minlength="8"
+        maxlength="128"
+      />
+    </div>
+    <div class="col-12">
+      <label class="form-label">
+        Contenido
+        <br />
+      </label>
+      <textarea name="body" class="form-control" cols="50" rows="10" required>
+<%= data.body %></textarea
+      >
+    </div>
+    <div class="col-12 text-center">
+      <button type="submit" class="btn btn-dark">Actualizar</button>
+      <form
+        action="/articulo/eliminar/<%= data._id %>?_method=DELETE"
+        method="POST"
+      >
+        <button class="btn btn-danger" type="submit">Eliminar</button>
+      </form>
+      <a href="/inicio" class="btn btn-secondary">Cancelar</a>
+    </div>
+  </form>
+</div>

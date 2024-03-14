@@ -5,23 +5,26 @@ const articleModel = require("../models/articleModel");
 const bcrypt = require("bcrypt");
 const jsonwebtoken = require("jsonwebtoken");
 
-const userLayout = "../views/layouts/user";
+const { authMiddleware, isLogged } = require("../configs/authMiddleware");
+const JWT_SECRET = process.env.JWT_SECRET;
 
-const JWTSECRET = process.env.JWT_SECRET;
-
-const authMiddleware = (req, resp, next) => {
-  const token = req.cookies.token;
-  if (!token) {
-    return resp.status(401).json({ message: "No autorizado." });
-  }
+router.get("/inicio", authMiddleware, async (req, resp) => {
   try {
-    const decoded = jsonwebtoken.verify(token, JWTSECRET);
-    req.userId = decoded.userId;
-    next();
+    const locals = {
+      title: "Inicio | Articulos UTL",
+      description: "Hecho por Quetzalcode.",
+      header: "Inicio",
+      isLogged: isLogged(req),
+    };
+    const data = await articleModel.find();
+    resp.render("user/articles", {
+      locals,
+      data,
+    });
   } catch (error) {
-    return resp.status(401).json({ message: "No autorizado." });
+    console.error(error);
   }
-};
+});
 
 router.get("/registrar", (req, resp) => {
   try {
@@ -29,8 +32,9 @@ router.get("/registrar", (req, resp) => {
       title: "Registro | Articulos UTL",
       description: "Hecho por Quetzalcode.",
       header: "Registro",
+      isLogged: isLogged(req),
     };
-    resp.render("user/userForm", { locals });
+    resp.render("user/signup", { locals });
   } catch (error) {
     console.error(error);
   }
@@ -45,31 +49,34 @@ router.post("/registrar", async (req, resp) => {
         username: username,
         password: encodedPassword,
       });
-      resp.status(201).json({
-        message: "Creado.",
-        user,
-      });
+      resp.status(201).redirect("/ingresar");
     } catch (error) {
       if (error.code === 11000)
-        resp.status(409).json({
-          message: "Duplicado.",
+        resp.status(409).render("partials/error", {
+          error: { code: 409, message: "El nombre de usuario ya está en uso." },
         });
     }
   } catch (error) {
-    resp.status(500).json({
-      message: "Error.",
+    resp.status(500).render("partials/error", {
+      error: {
+        code: 500,
+        message:
+          "El servidor se encontró con un error y no podemos completar tu solicitud.",
+      },
     });
   }
 });
 
 router.get("/ingresar", (req, resp) => {
+  if (isLogged(req)) return resp.redirect("/inicio");
   try {
     const locals = {
       title: "Ingreso | Articulos UTL",
       description: "Hecho por Quetzalcode.",
-      header: "Ingreso"
+      header: "Ingreso",
+      isLogged: isLogged(req),
     };
-    resp.render("user/index", { locals });
+    resp.render("user/login", { locals });
   } catch (error) {
     console.error(error);
   }
@@ -84,7 +91,7 @@ router.post("/ingresar", async (req, resp) => {
     if (!user || !validPassword) {
       resp.status(401).json({ message: "Credenciales incorrectas." });
     }
-    const token = jsonwebtoken.sign({ userId: user._id }, JWTSECRET);
+    const token = jsonwebtoken.sign({ userId: user._id }, JWT_SECRET);
     resp.cookie("token", token, { httpOnly: true });
     resp.redirect("/inicio");
   } catch (error) {
@@ -92,18 +99,9 @@ router.post("/ingresar", async (req, resp) => {
   }
 });
 
-router.get("/inicio", authMiddleware, async (req, resp) => {
-  try {
-    const locals = {
-      title: "Inicio | Articulos UTL",
-      description: "Hecho por Quetzalcode.",
-      header: "Inicio"
-    };
-    const data = await articleModel.find();
-    resp.render("user/home", { locals, data, layout: userLayout });
-  } catch (error) {
-    console.error(error);
-  }
+router.get("/salir", (req, resp) => {
+  resp.clearCookie("token");
+  resp.redirect("/");
 });
 
 module.exports = router;

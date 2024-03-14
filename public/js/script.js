@@ -1,6 +1,6 @@
 function checkPassword(confirmPassword) {
   if (confirmPassword.value != document.getElementById("password").value) {
-    confirmPassword.setCustomValidity("Passwords do not match.");
+    confirmPassword.setCustomValidity("Las contraseñas no coinciden.");
   } else {
     confirmPassword.setCustomValidity("");
   }
