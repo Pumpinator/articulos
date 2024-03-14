@@ -1,21 +1,22 @@
-<h1 class="text-center">Agregar un nuevo articulo</h1>
+<h1 class="text-center"><%= locals.header %></h1>
 <div class="container d-flex justify-content-center">
     <form class="row g-3" method="POST">
         <div class="col-12">
             <label class="form-label">
                 Titulo
             </label>
-            <input type="text" class="form-control" required minlength="8" maxlength="128">
+            <input name="title" type="text" class="form-control" required minlength="8" maxlength="128">
         </div>
         <div class="col-12">
             <label class="form-label">
                 Contenido
                 <br>
             </label>
-            <textarea class="form-control" minlength="1" maxlength="511" required></textarea>
+            <textarea name="body" class="form-control" cols="50" rows="10" required></textarea>
         </div>
         <div class="col-12 text-center">
             <button type="submit" class="btn btn-dark">Agregar</button>
+            <a href="/inicio" class="btn btn-secondary">Cancelar</a>
         </div>
     </form>
 </div>

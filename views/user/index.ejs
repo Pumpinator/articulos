@@ -1,23 +1,23 @@
-<h1 class="text-center">Ingreso</h1>
+<h1 class="text-center"><%= locals.header %></h1>
 <div class="container d-flex justify-content-center">
-    <form class="row g-3" method="POST">
+    <form class="row g-3" action="/ingresar" method="POST">
         <div class="col-12">
             <label class="form-label">
-                Correo
+                Usuario
             </label>
-            <input type="email" class="form-control" required minlength="8" maxlength="128">
+            <input type="text" class="form-control" required minlength="4" maxlength="64" name="username">
             <div class="form-text">Nunca compartiremos tu información con nadie.</div>
         </div>
         <div class="col-12">
             <label class="form-label">
                 Contraseña
             </label>
-            <input type="password" class="form-control" minlength="4" maxlength="64">
+            <input type="password" class="form-control" minlength="4" maxlength="64" name="password">
         </div>
         <div class="col-12 text-center p-3">
             <button type="submit" class="btn btn-dark">Ingresar</button>
             <div class="mb-3">
-                <a href="/registro">Registrarse</a>
+                <a href="/registrar">Registrarse</a>
             </div>
         </div>
     </form>

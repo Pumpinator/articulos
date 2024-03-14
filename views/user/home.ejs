@@ -1,0 +1,46 @@
+<h1 class="text-center"><%= locals.header %></h1>
+<div class="row align-items-md-stretch">
+  <% data.forEach(article => { %>
+  <div class="col-md-6 text-decoration-none mb-3">
+    <div class="h-100 p-5 text-bg-dark rounded-3">
+      <h2><%= article.title %></h2>
+      <small><%= article.created_at.toDateString() %></small>
+      <p><%= article.body.substring(0, 120) + '...' %></p>
+      <div class="row float-end">
+        <div class="col-3">
+          <a class="btn btn-dark" href="/articulo/<%= article._id %>">
+            <i class="fa-solid fa-eye fa-xl"></i>
+          </a>
+        </div>
+        &nbsp;
+        <div class="col-3">
+          <a
+            class="btn btn-dark"
+            href="/articulo/editar/<%= article._id %>"
+          >
+            <i class="fa-solid fa-pen-to-square fa-xl"></i>
+        </a>
+        </div>
+        &nbsp;
+        <form
+          class="col-3"
+          action="/articulo/eliminar/<%= article._id %>?_method=DELETE"
+          method="POST"
+        >
+          <button class="btn btn-dark" type="submit">
+            <i class="fa-solid fa-trash fa-xl"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <% }) %>
+  <a
+      class="col-md-12 text-decoration-none mb-3"
+      href="/articulo/agregar"
+    >
+      <div class="h-100 text-center p-5 text-bg-secondary rounded-3">
+        <i class="fa-solid fa-plus fa-2xl"></i>
+      </div>
+    </a>
+</div>

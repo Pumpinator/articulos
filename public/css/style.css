@@ -7,3 +7,8 @@
     width: 100%;
 }
 
+.link-white {
+    color: var(--bs-light);
+    font-weight: bold;
+    text-decoration: none;
+}

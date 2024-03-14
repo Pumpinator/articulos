@@ -16,7 +16,7 @@
       </form>
     </div>
     <div class="col">
-      <h2 class="text-center">Ultimos articulos</h2>
+      <h1 class="text-center"><%= locals.header %></h1>
     </div>
     <div class="col text-end">
       <% if (nextPage !== null) { %>
@@ -35,7 +35,7 @@
       <div class="h-100 p-5 text-bg-dark rounded-3">
         <h2><%= article.title %></h2>
         <small><%= article.created_at.toDateString() %></small>
-        <p><%= article.body %></p>
+        <p><%= article.body.substring(0, 120) + '...' %></p>
       </div>
     </a>
     <% }) %>
