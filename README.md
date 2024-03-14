@@ -7,7 +7,7 @@
 - MongoDB Cluster o MongoDB Compass
 
 ## Crear archivo .env
-Crear un archivo.env en la raíz del proyecto to guardar credenciales. Ejemplo:
+Crear un archivo llamado .env en la raíz del proyecto to guardar credenciales. Ejemplo:
 
 ```
 MONGODB_URI=mongodb://localhost:27017/articulos
