@@ -3,11 +3,12 @@ const JWT_SECRET = process.env.JWT_SECRET;
 
 const authMiddleware = (req, resp, next) => {
   const token = req.cookies.token;
-  if (!token) {
+  const userId = req.cookies.userId;
+  if (!token || !userId) {
     return resp
       .status(401)
       .render("partials/error", {
-        error: { code: 401, message: "No autorizado para ver este recurso." },
+        error: { code: 401, message: "No autorizado." },
       });
   }
   try {
@@ -18,13 +19,13 @@ const authMiddleware = (req, resp, next) => {
     return resp
       .status(401)
       .render("partials/error", {
-        error: { code: 401, message: "No autorizado para ver este recurso." },
+        error: { code: 401, message: "No autorizado." },
       });
   }
 };
 
 function isLogged(req) {
-  if (req.cookies.token) {
+  if (req.cookies.token && req.cookies.userId) {
     return true;
   }
   return false;

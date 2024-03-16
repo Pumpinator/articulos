@@ -3,12 +3,128 @@
   <article>
     <header class="mb-4">
       <h1 class="fw-bolder mb-1"><%= data.title %></h1>
-      <div class="text-muted fst-italic mb-2">
+      <div class="text-muted font-monospace fst-italic mb-2">
         <%= data.updated_at.toDateString()%>
+        <br />
+        creado por <%= data.author ? data.author.username : '[eliminado]' %>
       </div>
     </header>
-    <section class="mb-5">
-      <p class="fs-5 mb-4"><%= data.body %></p>
+    <section class="mb-2">
+      <p class="fs-5 mb-3" style="text-align: justify"><%= data.body %></p>
     </section>
   </article>
+
+  <div class="mb-3">
+    <% if (locals.isLogged) { %>
+    <div class="col text-end">
+      <a
+        class="badge bg-dark text-decoration-none"
+        href="/articulo/<%= data._id %>/like"
+      >
+        <i
+          class="fa-solid fa-thumbs-up fa-lg text-<%= locals.reaction === 'like' ? 'info' : 'light'%>"
+        ></i>
+        <br />
+        <%= data.likes.length %>
+      </a>
+      <a
+        class="badge bg-dark text-decoration-none"
+        href="/articulo/<%= data._id %>/dislike"
+      >
+        <i
+          class="fa-solid fa-thumbs-down fa-lg text-<%= locals.reaction === 'dislike' ? 'info' : 'light'%>"
+        ></i>
+        <br />
+        <%= data.dislikes.length %>
+      </a>
+      <a
+        class="badge bg-dark text-decoration-none"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#comment"
+        aria-expanded="false"
+        aria-controls="comment"
+      >
+        <i class="fa-solid fa-comment-medical fa-lg"></i>
+        <br />
+        <%= data.comments ? data.comments.length : 0 %>
+      </a>
+    </div>
+    <% } else {%>
+    <div class="col text-end">
+      <a class="badge bg-dark text-decoration-none">
+        <i
+          class="fa-solid fa-thumbs-up fa-xl text-<%= locals.reaction === 'like' ? 'info' : 'light'%>"
+        ></i>
+        <br />
+        <%= data.likes ? data.likes.length : 0 %>
+      </a>
+      <a class="badge bg-dark text-decoration-none">
+        <i
+          class="fa-solid fa-thumbs-down fa-xl text-<%= locals.reaction === 'dislike' ? 'info' : 'light'%>"
+        ></i>
+        <br />
+        <%= data.dislikes ? data.dislikes.length : 0 %>
+      </a>
+      <a class="badge bg-dark text-decoration-none">
+        <i class="fa-solid fa-comment-medical fa-xl"></i>
+        <br />
+        <%= data.comments ? data.comments.length : 0 %>
+      </a>
+    </div>
+    <% } %>
+  </div>
+
+  <div class="card border-0 collapse collapse-horizontal" id="comment">
+    <div class="card-body py-3">
+      <form action="/articulo/<%= data._id %>/comentar" method="POST">
+        <div class="d-flex flex-start w-100">
+          <div class="form-outline w-100">
+            <textarea
+              class="form-control"
+              id="textAreaExample"
+              rows="4"
+              name="body"
+            ></textarea>
+          </div>
+        </div>
+        <div class="mt-2 pt-1">
+          <button type="submit" class="btn btn-dark btn-sm">Publicar</button>
+          <button
+            type="button"
+            class="btn btn-outline-secondary btn-sm"
+            data-bs-toggle="collapse"
+            data-bs-target="#comment"
+            aria-expanded="false"
+            aria-controls="comment"
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <% if (data.comments.length > 0) { %>
+  <div class="card text-dark border-0">
+    <div class="card-body p-4">
+      <h4 class="mb-3">Comentarios recientes</h4>
+      <div class="d-flex flex-start">
+        <% data.comments.forEach(comment => { %>
+        <div>
+          <h6 class="fw-bold mb-1">
+            <%= comment.author ? comment.author.username : '[eliminado]'%>
+          </h6>
+          <div class="d-flex align-items-center mb-3">
+            <p class="mb-0"><%= comment.created_at.toDateString() %></p>
+          </div>
+          <p class="mb-0"><%= comment.body %></p>
+        </div>
+        <% }); %>
+      </div>
+    </div>
+  </div>
+  <% } else { %>
+  <div class="mb-5"></div>
+  <% } %>
 </div>

@@ -33,9 +33,30 @@
       href="/articulo/<%= article._id %>"
     >
       <div class="h-100 p-5 text-bg-dark rounded-3">
-        <h2><%= article.title %></h2>
-        <small><%= article.created_at.toDateString() %></small>
+        <div class="mb-3">
+          <h2><%= article.title %></h2>
+          <small class="font-monospace"><%= article.created_at.toDateString() %></small>
+          <br />
+          <small class="font-monospace">creado por <%= article.author != null ? article.author.username : '[eliminado]' %></small>
+        </div>
         <p><%= article.body.substring(0, 120) + '...' %></p>
+        <div class="row text-center">
+          <div class="col">
+            <i class="fa-solid fa-thumbs-up fa-lg"></i>
+            <br />
+            <%= article.likes ? article.likes.length : 0 %>
+          </div>
+          <div class="col">
+            <i class="fa-solid fa-thumbs-down fa-lg"></i>
+            <br />
+            <%= article.dislikes ? article.dislikes.length : 0 %>
+          </div>
+          <div class="col">
+            <i class="fa-solid fa-comment-medical fa-lg"></i>
+            <br />
+            <%= data.comments ? data.comments.length : 0 %>
+          </div>
+        </div>
       </div>
     </a>
     <% }) %>

@@ -21,7 +21,7 @@ app.use(methodOverride("_method"));
 
 app.use(
   session({
-    secret: "quetzalcode",
+    secret: "Quetzalcode",
     resave: false,
     saveUnitialized: true,
     store: MongoStore.create({
