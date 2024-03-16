@@ -59,6 +59,8 @@ exports.viewLecture = asyncHandler(async (req, resp) => {
   }
   locals.reaction = reaction
 
+  locals.commented = data.comments.some(comment => comment.author._id.toString() === userId);
+
   resp.render('article/lecture', { locals, data })
 })
 

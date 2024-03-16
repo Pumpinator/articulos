@@ -15,52 +15,19 @@ exports.viewLatest = asyncHandler(async (req, resp) => {
   let page = req.query.pagina || 1
 
   const data = await articleModel
-    .aggregate([
-      { $sort: { createdAt: -1 } },
-      {
-        $lookup: {
-          from: 'users',
-          localField: 'author',
-          foreignField: '_id',
-          as: 'author',
-        },
+    .find()
+    .populate({
+      path: 'author',
+      select: 'username',
+    })
+    .populate({
+      path: 'comments',
+      populate: {
+        path: 'author',
+        select: 'username',
       },
-      {
-        $unwind: {
-          path: '$author',
-          preserveNullAndEmptyArrays: true,
-        },
-      },
-      {
-        $lookup: {
-          from: 'users',
-          localField: 'comments.author',
-          foreignField: '_id',
-          as: 'comments.author',
-        },
-      },
-      {
-        $unwind: {
-          path: '$comments.author',
-          preserveNullAndEmptyArrays: true,
-        },
-      },
-      {
-        $project: {
-          title: 1,
-          body: 1,
-          'author._id': 1,
-          'author.username': 1,
-          likes: 1,
-          dislikes: 1,
-          created_at: 1,
-          updated_at: 1,
-          'comments.author._id': 1,
-          'comments.author.username': 1,
-          __v: 1,
-        },
-      },
-    ])
+    })
+    .sort({ created_at: -1 }) // Ordenar por 'created_at' en orden descendente
     .skip(perPage * page - perPage)
     .limit(perPage)
     .exec()

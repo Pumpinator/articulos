@@ -18,27 +18,27 @@
     <% if (locals.isLogged) { %>
     <div class="col text-end">
       <a
-        class="badge bg-dark text-decoration-none"
+        class="badge <%= locals.reaction === 'like' ? 'bg-dark' : 'text-dark'%> text-decoration-none"
         href="/articulo/<%= data._id %>/like"
       >
         <i
-          class="fa-solid fa-thumbs-up fa-lg text-<%= locals.reaction === 'like' ? 'info' : 'light'%>"
+          class="fa-solid fa-thumbs-up fa-lg"
         ></i>
         <br />
-        <%= data.likes.length %>
+        <%= data.likes ? data.likes.length : 0%>
       </a>
       <a
-        class="badge bg-dark text-decoration-none"
+        class="badge <%= locals.reaction === 'dislike' ? 'bg-dark' : 'text-dark'%> text-decoration-none"
         href="/articulo/<%= data._id %>/dislike"
       >
         <i
-          class="fa-solid fa-thumbs-down fa-lg text-<%= locals.reaction === 'dislike' ? 'info' : 'light'%>"
+          class="fa-solid fa-thumbs-down fa-lg"
         ></i>
         <br />
-        <%= data.dislikes.length %>
+        <%= data.dislikes ? data.dislikes.length : 0 %>
       </a>
       <a
-        class="badge bg-dark text-decoration-none"
+        class="badge <%= locals.commented ? 'bg-dark' : 'text-dark' %> text-decoration-none"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#comment"
@@ -52,21 +52,21 @@
     </div>
     <% } else {%>
     <div class="col text-end">
-      <a class="badge bg-dark text-decoration-none">
+      <a class="badge text-dark text-decoration-none">
         <i
-          class="fa-solid fa-thumbs-up fa-xl text-<%= locals.reaction === 'like' ? 'info' : 'light'%>"
+          class="fa-solid fa-thumbs-up fa-xl"
         ></i>
         <br />
         <%= data.likes ? data.likes.length : 0 %>
       </a>
-      <a class="badge bg-dark text-decoration-none">
+      <a class="badge text-dark text-decoration-none">
         <i
-          class="fa-solid fa-thumbs-down fa-xl text-<%= locals.reaction === 'dislike' ? 'info' : 'light'%>"
+          class="fa-solid fa-thumbs-down fa-xl"
         ></i>
         <br />
         <%= data.dislikes ? data.dislikes.length : 0 %>
       </a>
-      <a class="badge bg-dark text-decoration-none">
+      <a class="badge text-dark text-decoration-none">
         <i class="fa-solid fa-comment-medical fa-xl"></i>
         <br />
         <%= data.comments ? data.comments.length : 0 %>

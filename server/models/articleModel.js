@@ -33,7 +33,6 @@ const articleModel = new Schema({
   author: {
     type: Schema.Types.ObjectId,
     ref: 'user',
-    required: true,
   },
   created_at: {
     type: Date,

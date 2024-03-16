@@ -27,7 +27,7 @@
     </div>
   </div>
   <div class="row align-items-md-stretch mb-3">
-    <% data.forEach(article => { %>
+    <% data.forEach(article => { console.log(article);%>
     <a
       class="col-md-6 text-decoration-none mb-3"
       href="/articulo/<%= article._id %>"
@@ -54,7 +54,7 @@
           <div class="col">
             <i class="fa-solid fa-comment-medical fa-lg"></i>
             <br />
-            <%= data.comments ? data.comments.length : 0 %>
+            <%= article.comments ? article.comments.length : 0 %>
           </div>
         </div>
       </div>
