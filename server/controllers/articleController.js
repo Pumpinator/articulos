@@ -58,6 +58,7 @@ exports.viewLecture = asyncHandler(async (req, resp) => {
     reaction = 'dislike'
   }
   locals.reaction = reaction
+  locals.userId = userId
 
   locals.commented = data.comments.some(comment => comment.author._id.toString() === userId);
 

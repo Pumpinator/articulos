@@ -120,6 +120,47 @@
           </div>
           <p class="mb-0"><%= comment.body %></p>
         </div>
+        <% if (locals.isLogged) { %>
+          <div class="col text-end">
+            <a
+              class="badge <%= comment.likes.includes(locals.userId) ? 'bg-dark' : 'text-dark'%> text-decoration-none"
+              href="/comentario/<%= comment._id %>/like"
+            >
+              <i
+                class="fa-solid fa-thumbs-up fa-lg"
+              ></i>
+              <br />
+              <%= comment.likes ? comment.likes.length : 0%>
+            </a>
+            <a
+              class="badge <%= comment.dislikes.includes(locals.userId) ? 'bg-dark' : 'text-dark'%> text-decoration-none"
+              href="/comentario/<%= comment._id %>/dislike"
+            >
+              <i
+                class="fa-solid fa-thumbs-down fa-lg"
+              ></i>
+              <br />
+              <%= comment.dislikes ? comment.dislikes.length : 0 %>
+            </a>
+          </div>
+          <% } else {%>
+          <div class="col text-end">
+            <a class="badge text-dark text-decoration-none">
+              <i
+                class="fa-solid fa-thumbs-up fa-xl"
+              ></i>
+              <br />
+              <%= comment.likes ? comment.likes.length : 0 %>
+            </a>
+            <a class="badge text-dark text-decoration-none">
+              <i
+                class="fa-solid fa-thumbs-down fa-xl"
+              ></i>
+              <br />
+              <%= comment.dislikes ? comment.dislikes.length : 0 %>
+            </a>
+          </div>
+          <% } %>
         <% }); %>
       </div>
     </div>

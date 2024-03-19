@@ -19,6 +19,8 @@ const commentModel = new Schema({
     type: Date,
     default: Date.now,
   },
+  likes: [{ type: Schema.Types.ObjectId, ref: 'user' }],
+  dislikes: [{ type: Schema.Types.ObjectId, ref: 'user' }],
 })
 
 const articleModel = new Schema({
