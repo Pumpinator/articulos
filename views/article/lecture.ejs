@@ -18,7 +18,7 @@
     <% if (locals.isLogged) { %>
     <div class="col text-end">
       <a
-        class="badge <%= locals.reaction === 'like' ? 'bg-dark' : 'text-dark'%> text-decoration-none"
+        class="badge <%= data.likes.includes(locals.userId) ? 'bg-dark' : 'text-dark'%> text-decoration-none"
         href="/articulo/<%= data._id %>/like"
       >
         <i
@@ -28,7 +28,7 @@
         <%= data.likes ? data.likes.length : 0%>
       </a>
       <a
-        class="badge <%= locals.reaction === 'dislike' ? 'bg-dark' : 'text-dark'%> text-decoration-none"
+        class="badge <%= data.dislikes.includes(locals.userId) ? 'bg-dark' : 'text-dark'%> text-decoration-none"
         href="/articulo/<%= data._id %>/dislike"
       >
         <i
@@ -38,7 +38,7 @@
         <%= data.dislikes ? data.dislikes.length : 0 %>
       </a>
       <a
-        class="badge <%= locals.commented ? 'bg-dark' : 'text-dark' %> text-decoration-none"
+        class="badge <%= data.comments.some(comment => comment.author._id.toString() === locals.userId) ? 'bg-dark' : 'text-dark' %> text-decoration-none"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#comment"

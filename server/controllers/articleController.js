@@ -51,16 +51,7 @@ exports.viewLecture = asyncHandler(async (req, resp) => {
       select: 'username',
     })
 
-  let reaction = 'none'
-  if (data.likes.includes(userId)) {
-    reaction = 'like'
-  } else if(data.dislikes.includes(userId)) {
-    reaction = 'dislike'
-  }
-  locals.reaction = reaction
   locals.userId = userId
-
-  locals.commented = data.comments.some(comment => comment.author._id.toString() === userId);
 
   resp.render('article/lecture', { locals, data })
 })
