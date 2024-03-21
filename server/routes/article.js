@@ -1,4 +1,6 @@
 const express = require('express')
+const multer = require('multer')
+const upload = require('../configs/multer')
 const router = express.Router()
 const articleController = require('../controllers/articleController')
 
@@ -6,13 +8,13 @@ const authMiddleware  = require('../configs/authMiddleware').authMiddleware
 
 router.get('/articulo/crear', authMiddleware, articleController.viewCreate)
 
-router.post('/articulo/crear', authMiddleware, articleController.create)
+router.post('/articulo/crear', authMiddleware, upload.single('image'), articleController.create)
 
 router.get('/articulo/:id', articleController.viewLecture)
 
 router.get('/articulo/actualizar/:id', authMiddleware, articleController.viewUpdate)
 
-router.put('/articulo/actualizar/:id', authMiddleware, articleController.update)
+router.put('/articulo/actualizar/:id', authMiddleware, upload.single('image'), articleController.update)
 
 router.delete('/articulo/eliminar/:id', authMiddleware, articleController.delete)
 

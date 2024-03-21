@@ -1,6 +1,6 @@
 <h1 class="text-center"><%= locals.header %></h1>
 <div class="container d-flex justify-content-center mt-5">
-    <form class="row g-3" action="/articulo/crear" method="POST">
+    <form class="row g-3" action="/articulo/crear" method="POST" enctype="multipart/form-data">
         <div class="col-12">
             <label class="form-label">
                 Titulo
@@ -13,6 +13,12 @@
                 <br>
             </label>
             <textarea name="body" class="form-control" cols="50" rows="10" required></textarea>
+        </div>
+        <div class="col-12">
+            <label class="form-label">
+                Imagen
+            </label>
+            <input name="image" type="file" class="form-control">
         </div>
         <div class="col-12 text-center">
             <button type="submit" class="btn btn-dark">Agregar</button>

@@ -36,6 +36,9 @@ const articleModel = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'user',
   },
+  image: {
+    type: String,
+  },
   created_at: {
     type: Date,
     default: Date.now,

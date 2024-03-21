@@ -1,5 +1,6 @@
 const articleModel = require('../models/articleModel')
 const asyncHandler = require('express-async-handler')
+const fs = require('fs');
 
 const isLogged = require('../configs/authMiddleware').isLogged
 
@@ -16,11 +17,13 @@ exports.viewCreate = asyncHandler(async (req, resp) => {
 exports.create = asyncHandler(async (req, resp) => {
   const { title, body } = req.body
   const userId = req.cookies.userId
+  const file = req.file
   try {
     await articleModel.create({
       title: title,
       body: body,
       author: userId,
+      image: file.path === undefined ? '' : file.path,
     })
     resp.redirect('/inicio')
   } catch (error) {
@@ -81,16 +84,26 @@ exports.viewUpdate = asyncHandler(async (req, resp) => {
 exports.update = asyncHandler(async (req, resp) => {
   const { title, body } = req.body
   const id = req.params.id
-  const data = await articleModel.findByIdAndUpdate(id, {
-    title: title,
-    body: body,
-    updated_at: Date.now(),
-  })
-  if (data.author != req.cookies.userId)
+  const file = req.file
+
+  const article = await articleModel.findById(id)
+
+  if (article.author.toString() !== req.cookies.userId) {
     return resp.status(401).render('partials/error', {
       error: { code: 401, message: 'No autorizado.' },
     })
-  resp.redirect(`/articulo/actualizar/${id}`)
+  }
+
+  if (article.image) fs.unlinkSync(article.image);
+
+  const data = await articleModel.findByIdAndUpdate(id, {
+    title: title,
+    body: body,
+    image: file.path ? file.path : '',
+    updated_at: Date.now(),
+  }, { new: true })
+
+  resp.redirect(`/articulo/${id}`)
 })
 
 exports.delete = asyncHandler(async (req, resp) => {
@@ -103,6 +116,8 @@ exports.delete = asyncHandler(async (req, resp) => {
     return resp
       .status(403)
       .send('No tienes permiso para eliminar este artículo')
+
+  if (article.image) fs.unlinkSync(article.image);
 
   await articleModel.findByIdAndDelete(id)
 

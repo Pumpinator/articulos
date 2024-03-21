@@ -4,6 +4,7 @@
     class="row g-3"
     action="/articulo/actualizar/<%= data._id %>?_method=PUT"
     method="POST"
+    enctype="multipart/form-data"
   >
     <div class="col-12">
       <label class="form-label"> Titulo </label>
@@ -25,6 +26,10 @@
       <textarea name="body" class="form-control" cols="50" rows="10" required>
 <%= data.body %></textarea
       >
+    </div>
+    <div class="col-12">
+      <label class="form-label"> Imagen </label>
+      <input name="image" type="file" class="form-control" />
     </div>
     <div class="col-12 text-center">
       <button type="submit" class="btn btn-dark">Actualizar</button>

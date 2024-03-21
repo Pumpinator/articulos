@@ -8,6 +8,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 
 const getConnection = require("./server/configs/db");
+const upload = require("./server/configs/multer");
 
 const app = express();
 const PORT = process.env.PORT || 80;

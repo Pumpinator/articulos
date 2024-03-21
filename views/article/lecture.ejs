@@ -10,6 +10,13 @@
       </div>
     </header>
     <section class="mb-2">
+      <% if (data.image || data.image !== '') { %>
+      <img
+        class="img-fluid rounded"
+        src="<%= data.image.substring(6, data.image.length) %>"
+        alt="<%= data.title %>"
+      />
+      <% } %>
       <p class="fs-5 mb-3" style="text-align: justify"><%= data.body %></p>
     </section>
   </article>
@@ -21,9 +28,7 @@
         class="badge <%= data.likes.includes(locals.userId) ? 'bg-dark' : 'text-dark'%> text-decoration-none"
         href="/articulo/<%= data._id %>/like"
       >
-        <i
-          class="fa-solid fa-thumbs-up fa-lg"
-        ></i>
+        <i class="fa-solid fa-thumbs-up fa-lg"></i>
         <br />
         <%= data.likes ? data.likes.length : 0%>
       </a>
@@ -31,9 +36,7 @@
         class="badge <%= data.dislikes.includes(locals.userId) ? 'bg-dark' : 'text-dark'%> text-decoration-none"
         href="/articulo/<%= data._id %>/dislike"
       >
-        <i
-          class="fa-solid fa-thumbs-down fa-lg"
-        ></i>
+        <i class="fa-solid fa-thumbs-down fa-lg"></i>
         <br />
         <%= data.dislikes ? data.dislikes.length : 0 %>
       </a>
@@ -53,16 +56,12 @@
     <% } else {%>
     <div class="col text-end">
       <a class="badge text-dark text-decoration-none">
-        <i
-          class="fa-solid fa-thumbs-up fa-xl"
-        ></i>
+        <i class="fa-solid fa-thumbs-up fa-xl"></i>
         <br />
         <%= data.likes ? data.likes.length : 0 %>
       </a>
       <a class="badge text-dark text-decoration-none">
-        <i
-          class="fa-solid fa-thumbs-down fa-xl"
-        ></i>
+        <i class="fa-solid fa-thumbs-down fa-xl"></i>
         <br />
         <%= data.dislikes ? data.dislikes.length : 0 %>
       </a>
@@ -121,47 +120,38 @@
           <p class="mb-0"><%= comment.body %></p>
         </div>
         <% if (locals.isLogged) { %>
-          <div class="col text-end">
-            <a
-              class="badge <%= comment.likes.includes(locals.userId) ? 'bg-dark' : 'text-dark'%> text-decoration-none"
-              href="/comentario/<%= comment._id %>/like"
-            >
-              <i
-                class="fa-solid fa-thumbs-up fa-lg"
-              ></i>
-              <br />
-              <%= comment.likes ? comment.likes.length : 0%>
-            </a>
-            <a
-              class="badge <%= comment.dislikes.includes(locals.userId) ? 'bg-dark' : 'text-dark'%> text-decoration-none"
-              href="/comentario/<%= comment._id %>/dislike"
-            >
-              <i
-                class="fa-solid fa-thumbs-down fa-lg"
-              ></i>
-              <br />
-              <%= comment.dislikes ? comment.dislikes.length : 0 %>
-            </a>
-          </div>
-          <% } else {%>
-          <div class="col text-end">
-            <a class="badge text-dark text-decoration-none">
-              <i
-                class="fa-solid fa-thumbs-up fa-xl"
-              ></i>
-              <br />
-              <%= comment.likes ? comment.likes.length : 0 %>
-            </a>
-            <a class="badge text-dark text-decoration-none">
-              <i
-                class="fa-solid fa-thumbs-down fa-xl"
-              ></i>
-              <br />
-              <%= comment.dislikes ? comment.dislikes.length : 0 %>
-            </a>
-          </div>
-          <% } %>
-        <% }); %>
+        <div class="col text-end">
+          <a
+            class="badge <%= comment.likes.includes(locals.userId) ? 'bg-dark' : 'text-dark'%> text-decoration-none"
+            href="/comentario/<%= comment._id %>/like"
+          >
+            <i class="fa-solid fa-thumbs-up fa-lg"></i>
+            <br />
+            <%= comment.likes ? comment.likes.length : 0%>
+          </a>
+          <a
+            class="badge <%= comment.dislikes.includes(locals.userId) ? 'bg-dark' : 'text-dark'%> text-decoration-none"
+            href="/comentario/<%= comment._id %>/dislike"
+          >
+            <i class="fa-solid fa-thumbs-down fa-lg"></i>
+            <br />
+            <%= comment.dislikes ? comment.dislikes.length : 0 %>
+          </a>
+        </div>
+        <% } else {%>
+        <div class="col text-end">
+          <a class="badge text-dark text-decoration-none">
+            <i class="fa-solid fa-thumbs-up fa-xl"></i>
+            <br />
+            <%= comment.likes ? comment.likes.length : 0 %>
+          </a>
+          <a class="badge text-dark text-decoration-none">
+            <i class="fa-solid fa-thumbs-down fa-xl"></i>
+            <br />
+            <%= comment.dislikes ? comment.dislikes.length : 0 %>
+          </a>
+        </div>
+        <% } %> <% }); %>
       </div>
     </div>
   </div>
