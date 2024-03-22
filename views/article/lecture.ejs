@@ -108,9 +108,9 @@
   <div class="card text-dark border-0">
     <div class="card-body p-4">
       <h4 class="mb-3">Comentarios recientes</h4>
-      <div class="d-flex flex-start">
+      <div class="row d-flex flex-start">
         <% data.comments.forEach(comment => { %>
-        <div>
+        <div class="col-md-6 mb-3">
           <h6 class="fw-bold mb-1">
             <%= comment.author ? comment.author.username : '[eliminado]'%>
           </h6>
@@ -151,11 +151,15 @@
             <%= comment.dislikes ? comment.dislikes.length : 0 %>
           </a>
         </div>
-        <% } %> <% }); %>
+        <% } %>
+        <hr>
+        <% }); %>
       </div>
     </div>
   </div>
   <% } else { %>
-  <div class="mb-5"></div>
+  <div class="mb-5 text-center">
+    <small>Aún no hay ningún comentario</small>
+  </div>
   <% } %>
 </div>
