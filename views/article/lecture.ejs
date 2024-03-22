@@ -10,7 +10,7 @@
       </div>
     </header>
     <section class="mb-2">
-      <% if (data.image || data.image !== '') { %>
+      <% if (data.image) { %>
       <img
         class="img-fluid rounded"
         src="<%= data.image.substring(6, data.image.length) %>"

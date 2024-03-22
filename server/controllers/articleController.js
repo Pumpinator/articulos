@@ -1,6 +1,6 @@
 const articleModel = require('../models/articleModel')
 const asyncHandler = require('express-async-handler')
-const fs = require('fs');
+const fs = require('fs')
 
 const isLogged = require('../configs/authMiddleware').isLogged
 
@@ -94,14 +94,30 @@ exports.update = asyncHandler(async (req, resp) => {
     })
   }
 
-  if (article.image) fs.unlinkSync(article.image);
+  if (article.image && file) {
+    fs.unlinkSync(article.image)
 
-  const data = await articleModel.findByIdAndUpdate(id, {
-    title: title,
-    body: body,
-    image: file.path ? file.path : '',
-    updated_at: Date.now(),
-  }, { new: true })
+    await articleModel.findByIdAndUpdate(
+      id,
+      {
+        title: title,
+        body: body,
+        image: file.path,
+        updated_at: Date.now(),
+      },
+      { new: true }
+    )
+  } else {
+    await articleModel.findByIdAndUpdate(
+      id,
+      {
+        title: title,
+        body: body,
+        updated_at: Date.now(),
+      },
+      { new: true }
+    )
+  }
 
   resp.redirect(`/articulo/${id}`)
 })
@@ -117,7 +133,7 @@ exports.delete = asyncHandler(async (req, resp) => {
       .status(403)
       .send('No tienes permiso para eliminar este artículo')
 
-  if (article.image) fs.unlinkSync(article.image);
+  if (article.image) fs.unlinkSync(article.image)
 
   await articleModel.findByIdAndDelete(id)
 
