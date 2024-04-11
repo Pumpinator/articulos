@@ -39,7 +39,7 @@
           <br />
           <small class="font-monospace">creado por <%= article.author != null ? article.author.username : '[eliminado]' %></small>
         </div>
-        <p><%= article.body.substring(0, 120) + '...' %></p>
+        <p style="max-width: 100%; word-wrap: break-word;"><%= article.body.substring(0, 120) + '...' %></p>
         <div class="row text-center">
           <div class="col">
             <i class="fa-solid fa-thumbs-up fa-lg"></i>

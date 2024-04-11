@@ -5,7 +5,7 @@
     <div class="h-100 p-5 text-bg-dark rounded-3">
       <h2><%= article.title %></h2>
       <small><%= article.created_at.toDateString() %></small>
-      <p><%= article.body.substring(0, 120) + '...' %></p>
+      <p style="max-width: 100%; word-wrap: break-word;"><%= article.body.substring(0, 120) + '...' %></p>
       <div class="row float-end">
         <div class="col-3">
           <a class="btn btn-dark" href="/articulo/<%= article._id %>">
