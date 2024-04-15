@@ -9,12 +9,14 @@ const MongoStore = require("connect-mongo");
 
 const getConnection = require("./server/configs/db");
 const upload = require("./server/configs/multer");
+const favicon = require("serve-favicon");
 
 const app = express();
 const PORT = process.env.PORT || 80;
 
 getConnection();
 
+app.use(favicon(__dirname + '/public/favicon.ico')); 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
