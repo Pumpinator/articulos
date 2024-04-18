@@ -16,8 +16,18 @@
         src="<%= data.image.substring(6, data.image.length) %>"
         alt="<%= data.title %>"
       />
-      <% } %>
-      <p class="fs-5 mb-3" style="text-align: justify; max-width: 100%; word-wrap: break-word;"><%= data.body %></p>
+      <% } else { %> 
+        <img
+          class="img-fluid rounded"
+          src="https://via.placeholder.com/800x400"
+          alt="<%= data.title %>"
+        <%} %>
+      <p
+        class="fs-5 mb-3"
+        style="text-align: justify; max-width: 100%; word-wrap: break-word"
+      >
+        <%= data.body %>
+      </p>
     </section>
   </article>
 
@@ -152,7 +162,7 @@
           </a>
         </div>
         <% } %>
-        <hr>
+        <hr />
         <% }); %>
       </div>
     </div>

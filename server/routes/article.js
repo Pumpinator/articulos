@@ -1,5 +1,4 @@
 const express = require('express')
-const multer = require('multer')
 const upload = require('../configs/multer')
 const router = express.Router()
 const articleController = require('../controllers/articleController')
