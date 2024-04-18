@@ -12,7 +12,7 @@ const upload = require("./server/configs/multer");
 const favicon = require("serve-favicon");
 
 const app = express();
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 3000;
 
 getConnection();
 
@@ -28,7 +28,7 @@ app.use(
     resave: false,
     saveUnitialized: true,
     store: MongoStore.create({
-      mongoUrl: process.env.MONGODB_URI,
+      mongoUrl: process.env.DATABASE_URL,
     }),
     cookie: { secure: false },
   })

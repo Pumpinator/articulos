@@ -1,5 +1,5 @@
 const jsonwebtoken = require("jsonwebtoken");
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET || "Quetzalcode";
 
 const authMiddleware = (req, resp, next) => {
   const token = req.cookies.token;

@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt')
 const jsonwebtoken = require('jsonwebtoken')
 
 const isLogged = require('../configs/authMiddleware').isLogged
-const JWT_SECRET = process.env.JWT_SECRET
+const JWT_SECRET = process.env.JWT_SECRET || 'Quetzalcode'
 
 exports.viewHome = asyncHandler(async (req, resp) => {
   const locals = {

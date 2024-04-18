@@ -27,7 +27,7 @@ exports.viewLatest = asyncHandler(async (req, resp) => {
         select: 'username',
       },
     })
-    .sort({ created_at: -1 }) // Ordenar por 'created_at' en orden descendente
+    .sort({ created_at: -1 })
     .skip(perPage * page - perPage)
     .limit(perPage)
     .exec()
